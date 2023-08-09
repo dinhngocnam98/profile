@@ -152,7 +152,7 @@ const Profile = () => {
                                         <Col>
                                             <Form.Select required disabled={cityId.toString() === '0'} defaultValue={districtId} onChange={event => setDistrictId(event.target.value)}>
                                                 <option value='0'>Quận/Huyện</option>
-                                                {cityId === '1'? districtHCM.map(item => {
+                                                {cityId.toString() === '1'? districtHCM.map(item => {
                                                     return <option key={item.id} value={item.id}>{item.value}</option>
                                                 }) : districtDN.map(item => {
                                                     return <option key={item.id} value={item.id}>{item.value}</option>
@@ -231,7 +231,7 @@ const Profile = () => {
                                 <Col>
                                     <Form.Select required defaultValue={positionId} disabled={specializedId.toString() === '0'} onChange={event => setPositionId(event.target.value)}>
                                         <option value='0'>Chức danh công việc</option>
-                                        {specializedId === '1'? positionKD.map(item => {
+                                        {specializedId.toString() === '1'? positionKD.map(item => {
                                             return <option key={item.id} value={item.id}>{item.value}</option>
                                         }) : positionCNTN.map(item => {
                                             return <option key={item.id} value={item.id}>{item.value}</option>
