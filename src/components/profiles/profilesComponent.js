@@ -11,6 +11,7 @@ const Profile = () => {
     const [birthOfYear, setBirthOfYear] = useState('')
     const [ literacyId, setLiteracyId] = useState(0)
     const [specializedId, setSpecializedId] = useState(0)
+    const [positionId, setPositionId] = useState(0)
     const [fieldOfWorkIds, setFieldOfWorkIds] = useState([])
 
 
@@ -65,6 +66,24 @@ const Profile = () => {
         },
         {id: 2,
             value: 'Công nghệ thông tin'
+        },
+    ]
+
+    const positionKD =[
+        {id: 1,
+            value: 'Giám đốc kinh doanh'
+        },
+        {id: 2,
+            value: 'Nhân viên kinh doanh'
+        },
+    ]
+
+    const positionCNTN =[
+        {id: 1,
+            value: 'Frontend Develop'
+        },
+        {id: 2,
+            value: 'Backend Develop'
         },
     ]
 
@@ -131,7 +150,7 @@ const Profile = () => {
                                             <Form.Label>Quận/Huyện</Form.Label>
                                         </Col>
                                         <Col>
-                                            <Form.Select required disabled={cityId === 0} defaultValue={districtId} onChange={event => setDistrictId(event.target.value)}>
+                                            <Form.Select required disabled={cityId.toString() === '0'} defaultValue={districtId} onChange={event => setDistrictId(event.target.value)}>
                                                 <option value='0'>Quận/Huyện</option>
                                                 {cityId === '1'? districtHCM.map(item => {
                                                     return <option key={item.id} value={item.id}>{item.value}</option>
@@ -210,9 +229,11 @@ const Profile = () => {
                                     <Form.Label>Chức danh công việc</Form.Label>
                                 </Col>
                                 <Col>
-                                    <Form.Select required defaultValue={specializedId} onChange={event => setFieldOfWorkIds(event.target.value)}>
+                                    <Form.Select required defaultValue={positionId} disabled={specializedId.toString() === '0'} onChange={event => setPositionId(event.target.value)}>
                                         <option value='0'>Chức danh công việc</option>
-                                        {specialized.map(item => {
+                                        {specializedId === '1'? positionKD.map(item => {
+                                            return <option key={item.id} value={item.id}>{item.value}</option>
+                                        }) : positionCNTN.map(item => {
                                             return <option key={item.id} value={item.id}>{item.value}</option>
                                         })
                                         }
@@ -226,7 +247,7 @@ const Profile = () => {
                                     <Form.Label>Lĩnh vực làm việc</Form.Label>
                                 </Col>
                                 <Col>
-                                    <Form.Select multiple required defaultValue={fieldOfWorkIds}>
+                                    <Form.Select multiple required defaultValue={fieldOfWorkIds} onChange={event => setFieldOfWorkIds(event.target.value)}>
                                         {fieldOfWork.map(item => {
                                         return <option key={item.id} value={item.id}>{item.value}</option>
                                     })
