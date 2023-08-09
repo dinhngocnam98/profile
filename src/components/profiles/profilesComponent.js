@@ -4,16 +4,16 @@ import {useState} from "react";
 
 
 const Profile = () => {
-    const [defaultValue, setDefaultValue] = useState({
-        fullName: '',
-        city: 0,
-        district: 0,
-        placeOfBirth: 0,
-        birthOfYear: '',
-        literacy: 0,
-        specialized: 0,
-        fieldOfWork: [],
-    })
+    const [fullName, setFullName] = useState('')
+    const [cityId, setCityId] = useState(0)
+    const [districtId, setDistrictId] = useState(0)
+    const [placeOfBirthId, setPlaceOfBirthId] = useState(0)
+    const [birthOfYear, setBirthOfYear] = useState('')
+    const [ literacyId, setLiteracyId] = useState(0)
+    const [specializedId, setSpecializedId] = useState(0)
+    const [fieldOfWorkIds, setFieldOfWorkIds] = useState([])
+
+
     const [validated, setValidated] = useState(false);
 
     const city = [
@@ -99,7 +99,7 @@ const Profile = () => {
                                         <Form.Label>Họ và tên</Form.Label>
                                     </Col>
                                     <Col >
-                                        <Form.Control required type='text' placeholder='Họ và tên'  defaultValue={defaultValue.fullName}/>
+                                        <Form.Control required type='text' placeholder='Họ và tên' defaultValue={fullName} onChange={event => setFullName(event.target.value)}/>
                                     </Col>
                                 </Row>
                         </Form.Group>
@@ -115,7 +115,7 @@ const Profile = () => {
                                             <Form.Label>Tỉnh/Thành</Form.Label>
                                         </Col>
                                         <Col>
-                                            <Form.Select required defaultValue={defaultValue.city} onChange={val => console.log(val)}>
+                                            <Form.Select required defaultValue={cityId} onChange={event => setCityId(event.target.value)}>
                                                 <option value='0'>Tỉnh/Thành</option>
                                                 {city.map(item => {
                                                     return <option key={item.id} value={item.id}>{item.value}</option>
@@ -131,8 +131,14 @@ const Profile = () => {
                                             <Form.Label>Quận/Huyện</Form.Label>
                                         </Col>
                                         <Col>
-                                            <Form.Select required disabled={defaultValue.city === 0} defaultValue={defaultValue.district}>
+                                            <Form.Select required disabled={cityId === 0} defaultValue={districtId} onChange={event => setDistrictId(event.target.value)}>
                                                 <option value='0'>Quận/Huyện</option>
+                                                {cityId === '1'? districtHCM.map(item => {
+                                                    return <option key={item.id} value={item.id}>{item.value}</option>
+                                                }) : districtDN.map(item => {
+                                                    return <option key={item.id} value={item.id}>{item.value}</option>
+                                                })
+                                                }
                                             </Form.Select>
                                         </Col>
                                     </Row>
@@ -146,7 +152,7 @@ const Profile = () => {
                                     <Form.Label>Quê quán</Form.Label>
                                 </Col>
                                 <Col>
-                                        <Form.Select required defaultValue={defaultValue.placeOfBirth}>
+                                        <Form.Select required defaultValue={placeOfBirthId} onChange={event => setPlaceOfBirthId(event.target.value)}>
                                             <option value='0'>Tỉnh/Thành</option>
                                             {city.map(item => {
                                                 return <option key={item.id} value={item.id}>{item.value}</option>
@@ -156,13 +162,13 @@ const Profile = () => {
                                 </Col>
                             </Row>
                         </Form.Group>
-                        <Form.Group className='mb-3' controlId='birthOfYear'>
+                        <Form.Group className='mb-3' controlId='birthOfYear' >
                             <Row>
                                 <Col xs={4}>
                                     <Form.Label>Năm sinh</Form.Label>
                                 </Col>
                                 <Col >
-                                    <Form.Control required type='number' placeholder='Năm sinh' defaultValue={defaultValue.birthOfYear}/>
+                                    <Form.Control required type='number' placeholder='Năm sinh' defaultValue={birthOfYear} onChange={event => setBirthOfYear(event.target.value)}/>
                                 </Col>
                             </Row>
                         </Form.Group>
@@ -172,7 +178,7 @@ const Profile = () => {
                                     <Form.Label>Trình độ học vấn</Form.Label>
                                 </Col>
                                 <Col>
-                                    <Form.Select required defaultValue={defaultValue.literacy}>
+                                    <Form.Select required defaultValue={literacyId} onChange={event => setLiteracyId(event.target.value)}>
                                         <option value='0'>Trình độ học vấn</option>
                                         {literacy.map(item => {
                                             return <option key={item.id} value={item.id}>{item.value}</option>
@@ -188,7 +194,7 @@ const Profile = () => {
                                     <Form.Label>Chuyên ngành</Form.Label>
                                 </Col>
                                 <Col>
-                                    <Form.Select required defaultValue={defaultValue.specialized}>
+                                    <Form.Select required defaultValue={specializedId} onChange={event => setSpecializedId(event.target.value)}>
                                         <option value='0'>Chuyên ngành</option>
                                         {specialized.map(item => {
                                         return <option key={item.id} value={item.id}>{item.value}</option>
@@ -204,7 +210,7 @@ const Profile = () => {
                                     <Form.Label>Chức danh công việc</Form.Label>
                                 </Col>
                                 <Col>
-                                    <Form.Select defaultValue={defaultValue.specialized}>
+                                    <Form.Select required defaultValue={specializedId} onChange={event => setFieldOfWorkIds(event.target.value)}>
                                         <option value='0'>Chức danh công việc</option>
                                         {specialized.map(item => {
                                             return <option key={item.id} value={item.id}>{item.value}</option>
@@ -220,7 +226,7 @@ const Profile = () => {
                                     <Form.Label>Lĩnh vực làm việc</Form.Label>
                                 </Col>
                                 <Col>
-                                    <Form.Select multiple required defaultValue={defaultValue.fieldOfWork}>
+                                    <Form.Select multiple required defaultValue={fieldOfWorkIds}>
                                         {fieldOfWork.map(item => {
                                         return <option key={item.id} value={item.id}>{item.value}</option>
                                     })
